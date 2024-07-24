@@ -23,6 +23,7 @@ const Home = () => {
           />
         </header>
       </div>
+      
       <RightSidebar
         user = {loggedIn}
         transaction = {[]}
