@@ -14,6 +14,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { MobileNavProps } from "@/types"
+import Footer from "./Footer"
 
 
 
@@ -72,11 +74,13 @@ const MobileNav = ({user}:MobileNavProps) => {
                         }
                         USER INFO
                     </nav>
+                    
                     </SheetClose>
-                    FOOTER
+                    <Footer 
+                        user = {user}
+                        type = "mobile"
+                    />
                 </div>
-
-                
             </SheetContent>
         </Sheet>
     </section>
