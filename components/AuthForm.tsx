@@ -22,6 +22,7 @@ import { authformSchema } from '@/lib/utils'
 import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { signIn, signUp } from '@/lib/actions/user.actions'
+import PlaidLink from './PlaidLink'
 
 
 const AuthForm = ({type}:{type:string}) => {
@@ -40,10 +41,10 @@ const AuthForm = ({type}:{type:string}) => {
         lastName: "",
         address1: "",
         city:"",
-        province: "",
+        state: "",
         postalCode: "",
         dateOfBirth: "",
-        idNumber: "",
+        ssn: "",
         },
     })
  
@@ -52,8 +53,22 @@ const AuthForm = ({type}:{type:string}) => {
         setIsLoading(true)
     
         try {
+
             if(type === "sign-up"){
-                const newUser = await signUp(data);
+                const userData = {
+                    firstName: data.firstName!,
+                    lastName: data.lastName!,
+                    email: data.email!,
+                    password: data.password,
+                    address1: data.address1!,
+                    state: data.state!,
+                    city: data.city!,
+                    dateOfBirth:data.dateOfBirth!,
+                    ssn: data.ssn!,
+                    postalCode: data.postalCode!
+                }
+
+                const newUser = await signUp(userData);
                 setUser(newUser);
             }
 
@@ -102,7 +117,10 @@ const AuthForm = ({type}:{type:string}) => {
 
         {user ? (
             <div className="flex flex-col gap-4">
-                {/* PlaidLink */}
+                <PlaidLink 
+                    user={user}
+                    variant ='primary'
+                />
             </div>
         ):  (
             <>
@@ -131,8 +149,8 @@ const AuthForm = ({type}:{type:string}) => {
                                 />
 
                                 <CustomFormInput
-                                        control = {form.control} name = "province"
-                                        label = "Province" placeholder = "ex: Gauteng"
+                                        control = {form.control} name = "state"
+                                        label = "State" placeholder = "ex: Gauteng"
                                     />
 
                                 <div className='flex gap-4'>
@@ -154,8 +172,8 @@ const AuthForm = ({type}:{type:string}) => {
                                     />
 
                                     <CustomFormInput
-                                        control = {form.control} name = "idNumber"
-                                        label = "ID Number" placeholder = "ex: 1234567891234"
+                                        control = {form.control} name = "ssn"
+                                        label = "SSN" placeholder = "ex: 1234"
                                     />
                                 </div>
                             </>
